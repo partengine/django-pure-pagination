@@ -27,6 +27,7 @@ class Paginator(object):
         self.allow_empty_first_page = allow_empty_first_page
         self._num_pages = self._count = None
         self.request = request
+        self.relname = relname
 
     def validate_number(self, number):
         "Validates the given 1-based page number."
@@ -121,7 +122,7 @@ def add_page_querystring(func):
     return wrapper
 
 class Page(object):
-    def __init__(self, object_list, number, paginator):
+    def __init__(self, object_list, number, paginator, relname=None):
         self.object_list = object_list
         self.paginator = paginator
         if paginator.request:
