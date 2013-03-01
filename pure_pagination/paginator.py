@@ -20,7 +20,8 @@ class EmptyPage(InvalidPage):
     pass
 
 class Paginator(object):
-    def __init__(self, object_list, per_page, orphans=0, allow_empty_first_page=True, request=None, relname=None):
+    def __init__(self, object_list, per_page, orphans=0,
+                 allow_empty_first_page=True, request=None, reltuple=False):
         self.object_list = object_list
         self.per_page = per_page
         self.orphans = orphans
@@ -56,10 +57,11 @@ class Paginator(object):
     def _get_count(self):
         "Returns the total number of objects, across all pages."
         if self._count is None:
-            if self.relname is not None:
+            if self.reltuple is True:
                 from django.db import connection, transaction
                 cursor = connection.cursor()
-                cursor.execute("SELECT reltuples FROM pg_class WHERE relname = '%s'" % self.relname)
+                cursor.execute("SELECT reltuples FROM pg_class WHERE relname =
+                               '%s'" % self.object_list.model._meta.db_table)
                 row = cursor.fetchone()
                 self._count = int(row[0])
             else:
