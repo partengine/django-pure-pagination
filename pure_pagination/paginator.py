@@ -60,8 +60,7 @@ class Paginator(object):
             if self.reltuple is True:
                 from django.db import connection, transaction
                 cursor = connection.cursor()
-                cursor.execute("SELECT reltuples FROM pg_class WHERE relname =
-                               '%s'" % self.object_list.model._meta.db_table)
+                cursor.execute("SELECT reltuples FROM pg_class WHERE relname = '%s'" % self.object_list.model._meta.db_table)
                 row = cursor.fetchone()
                 self._count = int(row[0])
             else:
