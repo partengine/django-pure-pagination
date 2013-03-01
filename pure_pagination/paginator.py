@@ -28,7 +28,7 @@ class Paginator(object):
         self.allow_empty_first_page = allow_empty_first_page
         self._num_pages = self._count = None
         self.request = request
-        self.relname = relname
+        self.reltuple = reltuple
 
     def validate_number(self, number):
         "Validates the given 1-based page number."
